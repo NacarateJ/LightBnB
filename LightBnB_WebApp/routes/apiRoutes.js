@@ -1,10 +1,11 @@
 const express = require("express");
-const database = require("../db/database");
+const resDatabase = require("../db/reservations_queries");
+const propDatabase = require("../db/properties_queries");
 
 const router = express.Router();
 
 router.get("/properties", (req, res) => {
-  database
+  propDatabase
     .getAllProperties(req.query, 20)
     .then((properties) => res.send({ properties }))
     .catch((e) => {
@@ -19,7 +20,7 @@ router.get("/reservations", (req, res) => {
     return res.send({ error: "error" });
   }
 
-  database
+  resDatabase
     .getAllReservations(userId)
     .then((reservations) => res.send({ reservations }))
     .catch((e) => {
@@ -36,7 +37,7 @@ router.post("/properties", (req, res) => {
 
   const newProperty = req.body;
   newProperty.owner_id = userId;
-  database
+  propDatabase
     .addProperty(newProperty)
     .then((property) => {
       res.send(property);
