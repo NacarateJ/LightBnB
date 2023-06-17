@@ -5,10 +5,8 @@ LightBnB is a web application designed to revolutionize the travel industry. It 
 The main objective of this project is to design and create a PostgreSQL database using an entity relationship diagram (ERD) and to connect it to the [LightBnB web app](https://github.com/lighthouse-labs/LightBnB_WebApp) provided by [LHL](https://www.lighthouselabs.ca/en). This allows for interaction with the data from a web page using a JavaScript app and the node-postgres library.
 
 ## LightBnB ERD
-<div align="center">
-
-
-<div/>
+<img width="1098" alt="LightBnB ERD" src="https://github.com/NacarateJ/LightBnB/assets/114256348/02a5b906-b01e-495d-88ab-bb4062046e1e">
+  
 ## Features
 * User authentication and login
 * Property listing and searching
@@ -42,5 +40,6 @@ The main objective of this project is to design and create a PostgreSQL database
 
 <div align="center">
 
+https://github.com/NacarateJ/LightBnB/assets/114256348/8c03bc6d-6ea8-4d8e-87c0-81c520439c40
 
 <div/>
