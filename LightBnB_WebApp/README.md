@@ -46,9 +46,9 @@
 * `db` contains all the database interaction code.
   * `json` is a directory that contains a bunch of dummy data in `.json` files.
   * `database.js` connects to the database.
-  * properties_queries.js contains properties queries.
-  * reservatios_queries.js contains reservations queries.
-  * users_queries.js contains users queries.
+  * `properties_queries.js` contains properties queries.
+  * `reservatios_queries.js` contains reservations queries.
+  * `users_queries.js` contains users queries.
 * `public` contains all of the HTML, CSS, and client side JavaScript. 
   * `index.html` is the entry point to the application. It's the only html page because this is a single page application.
   * `javascript` contains all of the client side javascript files.
