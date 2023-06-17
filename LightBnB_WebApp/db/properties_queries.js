@@ -28,22 +28,26 @@ const getAllProperties = (options, limit = 10) => {
     queryString += condition;
   };
 
-  if (options.city) {
-    addQueryParam(`%${options.city}%`);
-    addClause(`WHERE city LIKE $${queryParams.length}`);
-  }
-  if (options.owner_id) {
-    addQueryParam(options.owner_id);
-    addClause(` AND owner_id = $${queryParams.length}`);
-  }
-  if (options.minimum_price_per_night) {
-    addQueryParam(options.minimum_price_per_night);
-    addClause(` AND cost_per_night / 100 >= $${queryParams.length}`);
-  }
-  if (options.maximum_price_per_night) {
-    addQueryParam(options.maximum_price_per_night);
-    addClause(` AND cost_per_night / 100 <= $${queryParams.length}`);
-  }
+  const clause = {
+    city: (arrayPosition) => `WHERE city LIKE $${arrayPosition}`,
+    owner_id: (arrayPosition) => ` AND owner_id = $${arrayPosition}`,
+    minimum_price_per_night: (arrayPosition) =>
+      ` AND cost_per_night / 100 >= $${arrayPosition}`,
+    maximum_price_per_night: (arrayPosition) =>
+      ` AND cost_per_night / 100 <= $${arrayPosition}`,
+  };
+
+  const havingClause = {
+      minimum_rating: (arrayPosition) =>
+      ` HAVING AVG(property_reviews.rating) >= $${arrayPosition}`,
+    }
+
+  for (const option in options) {
+    if (options[option] && clause[option]) {
+      addQueryParam(options[option]);
+      addClause(clause[option](queryParams.length));
+    }
+  };
 
   queryString += `
     GROUP BY
@@ -52,7 +56,7 @@ const getAllProperties = (options, limit = 10) => {
 
   if (options.minimum_rating) {
     addQueryParam(options.minimum_rating);
-    addClause(` HAVING AVG(property_reviews.rating) >= $${queryParams.length}`);
+    addClause(havingClause.minimum_rating(queryParams.length));
   }
 
   queryParams.push(limit);
@@ -65,8 +69,6 @@ const getAllProperties = (options, limit = 10) => {
   `;
 
   return query(queryString, queryParams)
-  // pool
-  //   .query(queryString, queryParams)
     .then((response) => {
       return response.rows;
     })
