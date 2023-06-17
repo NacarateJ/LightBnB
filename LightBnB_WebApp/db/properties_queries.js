@@ -43,10 +43,14 @@ const getAllProperties = (options, limit = 10) => {
     }
 
   for (const option in options) {
-    if (options[option] && clause[option]) {
-      addQueryParam(options[option]);
+    if (options[option] && option === "city") {
+      const cityValue = `%${options.city}%`;
+      addQueryParam(cityValue);
       addClause(clause[option](queryParams.length));
-    }
+    } else if (options[option] && clause[option]) {
+        addQueryParam(options[option]);
+        addClause(clause[option](queryParams.length));
+      }
   };
 
   queryString += `
